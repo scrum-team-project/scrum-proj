@@ -1,5 +1,2 @@
-# Server
-sdfsdf
-
-zmianyyy
+# REST API dla bazy MongoDB
 
