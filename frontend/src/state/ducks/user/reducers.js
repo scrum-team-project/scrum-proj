@@ -24,7 +24,6 @@ const loginReducer = (state = initialState, action) => {
         }
 
         case types.LOGIN_REQUEST: {
-            console.log("eo")
             return state
         }
 

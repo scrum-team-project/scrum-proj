@@ -2,7 +2,7 @@ import { createAction } from "redux-api-middleware";
 import types from "./types";
 
 const login = (login, password) => dispatch => {
-    console.log("LOGIN REQUEST");
+    console.log("POST REQUEST");
     dispatch(
         createAction({
             endpoint: "http://localhost:5000/login",
