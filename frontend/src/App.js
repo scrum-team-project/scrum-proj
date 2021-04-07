@@ -5,7 +5,7 @@ import Summary from "./ui/Summary/Summary";
 function App() {
     return (
         <div className="App">
-            {/* <LoginForm/> */}
+            <LoginForm/>
             <Summary />
         </div>
     );
