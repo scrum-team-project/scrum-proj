@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
-
+const form = require('./routes/Citizen');
 
 app.use(express.json());
 const cors = require('cors');
 app.use(cors())
+app.use('/form', form);
 
 require('dotenv').config();
 const dbConnData = {
