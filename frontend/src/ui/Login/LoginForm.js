@@ -45,9 +45,15 @@ function LoginForm(props) {
         <Formik
           initialValues={initialValues}
           enableReinitialize
-          onSubmit={(data) => props.login(data.login, data.password)}
+          onSubmit={(data, { setSubmitting, resetForm }) => {
+            setSubmitting(true);
+            console.log(data)
+            props.login(data.login, data.password);
+            setSubmitting(false);
+            resetForm();
+          }
+          }
         >
-          {({ values, handleSubmit, handleChange, resetForm }) => (
             <form
               className={classes.form}
               noValidate
@@ -91,11 +97,13 @@ function LoginForm(props) {
                   fullWidth
                   variant="contained"
                   color="primary"
+
+                  disabled={isSubmitting}
                   className={classes.submit}
-                  onClick={() => resetForm()}
                 >
                   Zalouj się
-            </Button>
+                </Button>
+
               </Grid>
             </form>
           )}

@@ -15,4 +15,5 @@ const store = createStore(
     composeWithDevTools(applyMiddleware(thunk, createMiddleware()))
 );
 
+
 export default store;
