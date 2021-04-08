@@ -1,17 +1,17 @@
 import React from "react";
-import { Formik, Field } from "formik";
+import { Formik, Field, Form, getIn } from "formik";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Checkbox, Divider, FormControlLabel, MenuItem, Paper, Radio, RadioGroup, Typography } from "@material-ui/core";
-import operations from "../../state/ducks/user/operations";
-import { connect } from "react-redux";
+import * as Yup from 'yup';
 
 const useStyles = makeStyles(theme => ({
     paper: {
         marginTop: theme.spacing(8),
+        marginBottom: theme.spacing(4),
         padding: theme.spacing(5),
         display: "flex",
         flexDirection: "column",
@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
+        width: '300px',
     },
     error: {
         paddingLeft: '6px',
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function LoginForm(props) {
+function CensusForm(props) {
     const classes = useStyles();
 
     const initialValues = {
@@ -61,57 +62,90 @@ function LoginForm(props) {
             street: "",
             number: ""
         },
-        // addres: "",
-        registeredAddres: "",
+        registeredAddress: {
+            voivodeship: "",
+            town: "",
+            street: "",
+            number: ""
+        },
         workplace: "",
         worktype: "",
         typeOfEmploymentContract: "trial",
         earnings: 0,
         nationality: "",
         disabled: false
-    }
+    };
+
+    const validationSchema = Yup.object({
+        firstName: Yup.string().required('Pole wymagane'),
+        lastName: Yup.string().required('Pole wymagane'),
+        id: Yup.string().required("Pole wymagane").matches(/^\d+$/, "Niepoprawny numer PESEL").length(11, "Niepoprawna długość"),
+        sex: Yup.string().required("Pole wymagane"),
+        dateOfBirth: Yup.date().required("Pole wymagane").max(new Date(), "Niepoprawna data urodzenia"),
+        education: Yup.string().required('Pole wymagane'),
+        maritalStatus: Yup.string().required('Pole wymagane'),
+        spouse: Yup.string().matches(/^\d+$/, "Niepoprawny numer PESEL").length(11, "Niepoprawna długość"),
+        kids: Yup.number().min(0),
+        address: Yup.object({
+            voivodeship: Yup.string().required('Pole wymagane'),
+            town: Yup.string().required('Pole wymagane'),
+            street: Yup.string().required('Pole wymagane'),
+            number: Yup.string().required('Pole wymagane'),
+        }),
+        registeredAddress: Yup.object({
+            voivodeship: Yup.string().required('Pole wymagane'),
+            town: Yup.string().required('Pole wymagane'),
+            street: Yup.string().required('Pole wymagane'),
+            number: Yup.string().required('Pole wymagane'),
+        }),
+        workplace: Yup.string().required('Pole wymagane'),
+        worktype: Yup.string().required('Pole wymagane'),
+        typeOfEmploymentContract: Yup.string().required('Pole wymagane'),
+        earnings: Yup.number().min(0),
+        nationality: Yup.string().required('Pole wymagane'),
+        disabled: Yup.boolean()
+    });
 
     return (
         <Container component="main" maxWidth="md">
             <Paper className={classes.paper}>
                 <Formik
                     initialValues={initialValues}
+                    validationSchema={validationSchema}
                     enableReinitialize
                     onSubmit={(data, { setSubmitting, resetForm }) => {
                         setSubmitting(true);
                         console.log(data)
-                        props.login(data.login, data.password);
                         setSubmitting(false);
                         resetForm();
                     }
                     }
                 >
-                    {({ values, handleSubmit, isSubmitting }) => (
-                        <form
-                            className={classes.form}
-                            noValidate
-                            onSubmit={handleSubmit}
-                        >
+                    {({ values, errors, touched, isSubmitting, validateForm }) => (
+                        <Form className={classes.form} autoComplete="off">
                             <Typography align="left" variant={'h4'} paragraph>Uzupełnij dane</Typography>
                             {/* imie */}
                             <Field
                                 name='firstName'
                                 type='input'
-                                variant="outlined"
+                                variant="standard"
                                 label="Imię"
                                 margin="normal"
                                 fullWidth
+                                helperText={touched.firstName ? errors.firstName : ""}
+                                error={touched.firstName && Boolean(errors.firstName)}
                                 as={TextField}
                             />
-
                             {/* Nazwisko */}
                             <Field
                                 name='lastName'
                                 type='input'
-                                variant="outlined"
+                                variant="standard"
                                 label="Nazwisko"
                                 margin="normal"
                                 fullWidth
+                                helperText={touched.lastName ? errors.lastName : ""}
+                                error={touched.lastName && Boolean(errors.lastName)}
                                 as={TextField}
                             />
 
@@ -119,30 +153,34 @@ function LoginForm(props) {
                             <Field
                                 name='id'
                                 type='input'
-                                variant="outlined"
+                                variant="standard"
                                 label="PESEL"
                                 margin="normal"
                                 fullWidth
+                                helperText={touched.id ? errors.id : ""}
+                                error={touched.id && Boolean(errors.id)}
                                 as={TextField}
                             />
 
                             {/* płeć */}
-                            <Field as={RadioGroup} name="sex">
+                            <Field as={RadioGroup} name="sex"
+                                helperText={touched.sex ? errors.sex : ""}
+                                error={touched.sex && Boolean(errors.sex)}
+                            >
                                 <Grid container style={{ margin: '10px 12px' }}>
                                     <FormControlLabel
                                         value="male"
                                         control={<Radio disabled={isSubmitting} />}
-                                        label="Mężczyzna"
+                                        label="mężczyzna"
                                         disabled={isSubmitting}
                                     />
                                     <FormControlLabel
                                         value="female"
                                         control={<Radio disabled={isSubmitting} />}
-                                        label="Kobieta"
+                                        label="kobieta"
                                         disabled={isSubmitting}
                                     />
                                 </Grid>
-
                             </Field>
 
                             <Grid container spacing={2}>
@@ -151,11 +189,13 @@ function LoginForm(props) {
                                     <Field
                                         name='dateOfBirth'
                                         type='date'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Data urodzenia"
                                         margin="normal"
-                                        as={TextField}
                                         fullWidth
+                                        helperText={touched.dateOfBirth ? errors.dateOfBirth : ""}
+                                        error={touched.dateOfBirth && Boolean(errors.dateOfBirth)}
+                                        as={TextField}
                                     />
                                 </Grid>
 
@@ -164,16 +204,19 @@ function LoginForm(props) {
                                     <Field
                                         name={`maritalStatus`}
                                         type="select"
-                                        variant="outlined"
+                                        variant="standard"
                                         margin="normal"
                                         label="Stan cywilny"
-                                        as={TextField}
                                         select
                                         fullWidth
+                                        helperText={touched.maritalStatus ? errors.maritalStatus : ""}
+                                        error={touched.maritalStatus && Boolean(errors.maritalStatus)}
+                                        as={TextField}
                                     >
-                                        <MenuItem value="single">Kawaler/panna</MenuItem>
-                                        <MenuItem value="married">Żonaty/zamężna</MenuItem>
-                                        <MenuItem value="divorced">Rozwiedziony/rozwiedziona</MenuItem>
+                                        <MenuItem value="single">kawaler/panna</MenuItem>
+                                        <MenuItem value="married">żonaty/zamężna</MenuItem>
+                                        <MenuItem value="divorced">rozwiedziony/rozwiedziona</MenuItem>
+                                        <MenuItem value="widowed">wdowiec/wdowa</MenuItem>
                                     </Field>
                                 </Grid>
 
@@ -182,188 +225,245 @@ function LoginForm(props) {
                                     <Field
                                         name={`education`}
                                         type="select"
-                                        variant="outlined"
+                                        variant="standard"
                                         margin="normal"
                                         label="Wykształcenie"
-                                        as={TextField}
                                         select
                                         fullWidth
+                                        helperText={touched.education ? errors.education : ""}
+                                        error={touched.education && Boolean(errors.education)}
+                                        as={TextField}
                                     >
-                                        <MenuItem value="primary">Podstawowe</MenuItem>
-                                        <MenuItem value="secondary">Średnie</MenuItem>
-                                        <MenuItem value="higher">Wyższe</MenuItem>
+                                        <MenuItem value="primary">podstawowe</MenuItem>
+                                        <MenuItem value="secondary">średnie</MenuItem>
+                                        <MenuItem value="higher">wyższe</MenuItem>
                                     </Field>
                                 </Grid>
                             </Grid>
-                            <Grid container spacing={2}>
 
+                            <Grid container spacing={2}>
                                 {/* dane małżonka */}
-                                <Grid item xs={12} sm={8}>
+                                <Grid item xs={12} sm={9}>
                                     <Field
                                         name='spouse'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Dane małżonka (PESEL)"
                                         margin="normal"
                                         fullWidth
+                                        disabled={values.maritalStatus !== "married"}
+                                        helperText={touched.spouse ? errors.spouse : ""}
+                                        error={touched.spouse && Boolean(errors.spouse)}
                                         as={TextField}
                                     />
                                 </Grid>
 
                                 {/* ilosc dzieci */}
-                                <Grid item xs={12} md={4}>
+                                <Grid item xs={12} md={3}>
                                     <Field
                                         name='kids'
                                         type='number'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Ilość dzieci"
                                         margin="normal"
-                                        as={TextField}
                                         fullWidth
+                                        InputProps={{ inputProps: { min: 0 } }}
+                                        helperText={touched.kids ? errors.kids : ""}
+                                        error={touched.kids && Boolean(errors.kids)}
+                                        as={TextField}
                                     />
                                 </Grid>
                             </Grid>
 
                             <Divider className={classes.divider} />
+                            {/* adres zamieszkania */}
                             <Typography align="left" variant='subtitle2' className={classes.subtitle}>Adres zamieszkania</Typography>
                             <Grid container spacing={2}>
+                                {/* województwo */}
                                 <Grid item xs={12} sm={6}>
                                     <Field
                                         name='address.voivodeship'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Województwo"
                                         margin="normal"
                                         fullWidth
+                                        helperText={
+                                            getIn(touched, 'address.voivodeship') &&
+                                            getIn(errors, 'address.voivodeship')
+                                        }
+                                        error={
+                                            Boolean(getIn(touched, 'address.voivodeship') &&
+                                                getIn(errors, 'address.voivodeship'))
+                                        }
                                         as={TextField}
                                     />
                                 </Grid>
+                                {/* miejscowość */}
                                 <Grid item xs={12} sm={6}>
                                     <Field
                                         name='address.town'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Miejscowość"
                                         margin="normal"
                                         fullWidth
+                                        helperText={
+                                            getIn(touched, 'address.town') &&
+                                            getIn(errors, 'address.town')
+                                        }
+                                        error={
+                                            Boolean(getIn(touched, 'address.town') &&
+                                                getIn(errors, 'address.town'))
+                                        }
                                         as={TextField}
                                     />
                                 </Grid>
                             </Grid>
                             <Grid container spacing={2}>
+                                {/* ulica */}
                                 <Grid item xs={12} sm={8}>
                                     <Field
                                         name='address.street'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Ulica"
                                         margin="normal"
                                         fullWidth
+                                        helperText={
+                                            getIn(touched, 'address.street') &&
+                                            getIn(errors, 'address.street')
+                                        }
+                                        error={
+                                            Boolean(getIn(touched, 'address.street') &&
+                                                getIn(errors, 'address.street'))
+                                        }
                                         as={TextField}
                                     />
                                 </Grid>
+                                {/* numer domu/mieszkania */}
                                 <Grid item xs={12} sm={4}>
                                     <Field
                                         name='address.number'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Numer domu/mieszkania"
                                         margin="normal"
                                         fullWidth
+                                        helperText={
+                                            getIn(touched, 'address.number') &&
+                                            getIn(errors, 'address.number')
+                                        }
+                                        error={
+                                            Boolean(getIn(touched, 'address.number') &&
+                                                getIn(errors, 'address.number'))
+                                        }
                                         as={TextField}
                                     />
                                 </Grid>
                             </Grid>
                             <Divider className={classes.divider} />
+
+                            {/* adres zameldowania */}
                             <Typography align="left" variant='subtitle2' className={classes.subtitle}>Adres zameldowania</Typography>
                             <Grid container spacing={2}>
+                                {/* województwo */}
                                 <Grid item xs={12} sm={6}>
                                     <Field
-                                        name='address.voivodeship'
+                                        name='registeredAddress.voivodeship'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Województwo"
                                         margin="normal"
                                         fullWidth
+                                        helperText={
+                                            getIn(touched, 'registeredAddress.voivodeship') &&
+                                            getIn(errors, 'registeredAddress.voivodeship')
+                                        }
+                                        error={
+                                            Boolean(getIn(touched, 'registeredAddress.voivodeship') &&
+                                                getIn(errors, 'registeredAddress.voivodeship'))
+                                        }
                                         as={TextField}
                                     />
                                 </Grid>
+                                {/* miejscowość */}
                                 <Grid item xs={12} sm={6}>
                                     <Field
-                                        name='address.town'
+                                        name='registeredAddress.town'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Miejscowość"
                                         margin="normal"
                                         fullWidth
+                                        helperText={
+                                            getIn(touched, 'registeredAddress.town') &&
+                                            getIn(errors, 'registeredAddress.town')
+                                        }
+                                        error={
+                                            Boolean(getIn(touched, 'registeredAddress.town') &&
+                                                getIn(errors, 'registeredAddress.town'))
+                                        }
                                         as={TextField}
                                     />
                                 </Grid>
                             </Grid>
                             <Grid container spacing={2}>
+                                {/* ulica */}
                                 <Grid item xs={12} sm={8}>
                                     <Field
-                                        name='address.street'
+                                        name='registeredAddress.street'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Ulica"
                                         margin="normal"
                                         fullWidth
+                                        helperText={
+                                            getIn(touched, 'registeredAddress.street') &&
+                                            getIn(errors, 'registeredAddress.street')
+                                        }
+                                        error={
+                                            Boolean(getIn(touched, 'registeredAddress.street') &&
+                                                getIn(errors, 'registeredAddress.street'))
+                                        }
                                         as={TextField}
                                     />
                                 </Grid>
+                                {/* numer domu/mieszkania */}
                                 <Grid item xs={12} sm={4}>
                                     <Field
-                                        name='address.number'
+                                        name='registeredAddress.number'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Numer domu/mieszkania"
                                         margin="normal"
                                         fullWidth
+                                        helperText={
+                                            getIn(touched, 'registeredAddress.number') &&
+                                            getIn(errors, 'registeredAddress.number')
+                                        }
+                                        error={
+                                            Boolean(getIn(touched, 'registeredAddress.number') &&
+                                                getIn(errors, 'registeredAddress.number'))
+                                        }
                                         as={TextField}
                                     />
                                 </Grid>
                             </Grid>
                             <Divider className={classes.divider} />
 
-                            {/* adres zamieszkania */}
-                            {/* <Grid item xs={12} sm={6}>
-                                    <Field
-                                        name='address.town'
-                                        type='input'
-                                        variant="outlined"
-                                        label="Adres zamieszkania"
-                                        margin="normal"
-                                        fullWidth
-                                        as={TextField}
-                                    />
-                                </Grid> */}
-                            {/* adres zameldowania */}
-                            {/* <Grid item xs={12} sm={6}>
-                                    <Field
-                                        name='registeredAddres'
-                                        type='input'
-                                        variant="outlined"
-                                        label="Adres zameldowania"
-                                        margin="normal"
-                                        fullWidth
-                                        as={TextField}
-                                    />
-                                </Grid> */}
-
-                            {/* </Grid> */}
-
                             <Grid container spacing={2}>
-
                                 {/* miejsce pracy */}
                                 <Grid item xs={12} sm={6}>
                                     <Field
                                         name='workplace'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Miejsce pracy"
                                         margin="normal"
                                         fullWidth
+                                        helperText={touched.workplace ? errors.workplace : ""}
+                                        error={touched.workplace && Boolean(errors.workplace)}
                                         as={TextField}
                                     />
                                 </Grid>
@@ -373,26 +473,30 @@ function LoginForm(props) {
                                     <Field
                                         name='worktype'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Wykonywany zawód"
                                         margin="normal"
                                         fullWidth
+                                        helperText={touched.worktype ? errors.worktype : ""}
+                                        error={touched.worktype && Boolean(errors.worktype)}
                                         as={TextField}
                                     />
                                 </Grid>
                             </Grid>
-                            <Grid container spacing={2} justify={'space-between'}>
 
+                            <Grid container spacing={2}>
                                 {/* rodzaj umowy */}
                                 <Grid item xs={6} md={3}>
                                     <Field
                                         name={`typeOfEmploymentContract`}
                                         type="select"
-                                        variant="outlined"
+                                        variant="standard"
                                         margin="normal"
                                         label="Rodzaj umowy"
                                         as={TextField}
                                         fullWidth
+                                        helperText={touched.typeOfEmploymentContract ? errors.typeOfEmploymentContract : ""}
+                                        error={touched.typeOfEmploymentContract && Boolean(errors.typeOfEmploymentContract)}
                                         select
                                     >
                                         <MenuItem value="trial">okres próbny</MenuItem>
@@ -406,10 +510,13 @@ function LoginForm(props) {
                                     <Field
                                         name='earnings'
                                         type='number'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Dochód z tytułu pracy"
                                         margin="normal"
                                         as={TextField}
+                                        InputProps={{ inputProps: { min: 0 } }}
+                                        helperText={touched.earnings ? errors.earnings : ""}
+                                        error={touched.earnings && Boolean(errors.earnings)}
                                         fullWidth
                                     />
                                 </Grid>
@@ -419,10 +526,12 @@ function LoginForm(props) {
                                     <Field
                                         name='nationality'
                                         type='input'
-                                        variant="outlined"
+                                        variant="standard"
                                         label="Kraj obywatelstwa"
                                         margin="normal"
                                         fullWidth
+                                        helperText={touched.nationality ? errors.nationality : ""}
+                                        error={touched.nationality && Boolean(errors.nationality)}
                                         as={TextField}
                                     />
                                 </Grid>
@@ -433,43 +542,36 @@ function LoginForm(props) {
                                 <Field
                                     name='disabled'
                                     type='checkbox'
-                                    variant="outlined"
+                                    variant="standard"
                                     label="Niepełnosprawność "
                                     margin="normal"
+                                    helperText={touched.disabled ? errors.disabled : ""}
+                                    error={touched.disabled && Boolean(errors.disabled)}
                                     as={Checkbox}
                                 />
                                 <Typography style={{ marginTop: '9px' }}>Niepełnosprawność</Typography>
                             </div>
 
-                            <Grid container>
+                            <Grid container justify="flex-end">
                                 <Button
-                                    type="submit"
-                                    fullWidth
                                     variant="contained"
-                                    color="primary"
-                                    disabled={isSubmitting}
+                                    color='primary'
+                                    type="submit"
+                                    onClick={() => validateForm()}
                                     className={classes.submit}
                                 >
                                     Prześlij
-                            </Button>
+                                </Button>
                             </Grid>
-                            <pre>{JSON.stringify(values, null, 2)}</pre>
-                        </form>
-
+                            <pre>{JSON.stringify({ values, errors }, null, 2)}</pre>
+                        </Form>
                     )}
-
                 </Formik>
             </Paper>
-
-        </Container >
+        </Container>
 
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.user
-    };
-}
 
-export default connect(mapStateToProps, { login: operations.login })(LoginForm);
+export default CensusForm;
