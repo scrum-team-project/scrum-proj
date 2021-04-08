@@ -5,7 +5,7 @@ import {
     makeStyles,
     Typography,
 } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
+
 import React from "react";
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "5%",
     },
 }));
-const SummaryTile = () => {
+const SummaryTile = ({ value, description }) => {
     const classes = useStyles();
 
     return (
@@ -27,10 +27,10 @@ const SummaryTile = () => {
             <Card className={classes.card}>
                 <CardContent>
                     <Typography className={classes.typo}>
-                        Liczba mieszkańców:
+                        {description}
                     </Typography>
                     <Typography className={classes.value} color="primary">
-                        12000
+                        {value}
                     </Typography>
                 </CardContent>
             </Card>
