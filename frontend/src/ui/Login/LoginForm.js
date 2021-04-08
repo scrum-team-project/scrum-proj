@@ -54,7 +54,6 @@ function LoginForm(props) {
           }
           }
         >
-          {({ values, handleSubmit, handleChange, isSubmitting }) => (
             <form
               className={classes.form}
               noValidate
@@ -98,11 +97,13 @@ function LoginForm(props) {
                   fullWidth
                   variant="contained"
                   color="primary"
+
                   disabled={isSubmitting}
                   className={classes.submit}
                 >
                   Zalouj się
                 </Button>
+
               </Grid>
             </form>
           )}
