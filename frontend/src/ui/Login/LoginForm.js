@@ -103,7 +103,7 @@ function LoginForm(props) {
                                     disabled={isSubmitting}
                                     className={classes.submit}
                                 >
-                                    Zalouj się
+                                    Zaloguj się
                                 </Button>
                             </Grid>
                         </form>

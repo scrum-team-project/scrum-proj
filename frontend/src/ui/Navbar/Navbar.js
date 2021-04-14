@@ -20,7 +20,11 @@ function LinkTab(props) {
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+
         backgroundColor: theme.palette.background.paper,
+    },
+    tab: {
+        marginLeft: theme.spacing(2),
     },
 }));
 
@@ -37,12 +41,11 @@ function NavBar({ user }) {
 
     return (
         <div className={classes.root}>
-            
             <AppBar position="static">
                 <Tabs
-                    variant="fullWidth"
                     value={value}
                     aria-label="nav tabs example"
+                    className={classes.tab}
                 >
                     <LinkTab
                         label="Dane Statystyczne"

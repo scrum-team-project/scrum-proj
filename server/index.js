@@ -22,14 +22,17 @@ const dbConnData = {
 };
 
 const mongoose = require("mongoose");
- const addAdmin= async ()=>  {
-  try {
-    const adm=new Admin({login:"admin",password:"admin"})
-    await adm.save()
-    console.log('Dodano Admina !!!');
-  } catch (error) {
-    console.log(error);
-  }}
+ 
+  const addAdmin= async ()=>  {
+    try {
+      if(await !Admin.exists({ login: 'admin' })){
+      const adm=new Admin({login:"admin",password:"admin"})
+      await adm.save()
+      console.log('Dodano Admina !!!');
+      }
+    } catch (error) {
+      console.log(error);
+    }}
   
 
 
