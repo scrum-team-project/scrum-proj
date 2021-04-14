@@ -43,7 +43,7 @@ router.get("/summary-population", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  await Post.findByIdAndDelete(id, (error, deleted) => {
+  await Citizen.findByIdAndDelete(id, (error, deleted) => {
     if (error) {
       res.send(false); // false if fail
     } else {
@@ -56,7 +56,7 @@ router.patch("/:idUser", async (req, res) => {
   const id = req.params.id;
   const updated = req.body;
 
-  await User.findOneAndUpdate({ _id: id }, { $set: updated }, (error, updated) => {
+  await Citizen.findOneAndUpdate({ _id: id }, { $set: updated }, (error, updated) => {
       if (error) {
         res.send(false);
       } else {
