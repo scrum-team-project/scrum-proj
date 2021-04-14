@@ -16,6 +16,8 @@ import {
     Typography,
 } from "@material-ui/core";
 import * as Yup from "yup";
+import { connect } from "react-redux";
+import operations from "../../state/ducks/census/operations";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -131,6 +133,7 @@ function CensusForm(props) {
                     enableReinitialize
                     onSubmit={(data, { setSubmitting, resetForm }) => {
                         setSubmitting(true);
+                        props.sendFormData(data);
                         console.log(data);
                         setSubmitting(false);
                         resetForm();
@@ -142,6 +145,7 @@ function CensusForm(props) {
                         touched,
                         isSubmitting,
                         validateForm,
+                        resetForm
                     }) => (
                         <Form className={classes.form} autoComplete="off">
                             <Typography align="left" variant={"h4"} paragraph>
@@ -390,10 +394,10 @@ function CensusForm(props) {
                                                 touched,
                                                 "address.voivodeship"
                                             ) &&
-                                                getIn(
-                                                    errors,
-                                                    "address.voivodeship"
-                                                )
+                                            getIn(
+                                                errors,
+                                                "address.voivodeship"
+                                            )
                                         )}
                                         as={TextField}
                                     />
@@ -413,7 +417,7 @@ function CensusForm(props) {
                                         }
                                         error={Boolean(
                                             getIn(touched, "address.town") &&
-                                                getIn(errors, "address.town")
+                                            getIn(errors, "address.town")
                                         )}
                                         as={TextField}
                                     />
@@ -435,7 +439,7 @@ function CensusForm(props) {
                                         }
                                         error={Boolean(
                                             getIn(touched, "address.street") &&
-                                                getIn(errors, "address.street")
+                                            getIn(errors, "address.street")
                                         )}
                                         as={TextField}
                                     />
@@ -455,7 +459,7 @@ function CensusForm(props) {
                                         }
                                         error={Boolean(
                                             getIn(touched, "address.number") &&
-                                                getIn(errors, "address.number")
+                                            getIn(errors, "address.number")
                                         )}
                                         as={TextField}
                                     />
@@ -496,10 +500,10 @@ function CensusForm(props) {
                                                 touched,
                                                 "registeredAddress.voivodeship"
                                             ) &&
-                                                getIn(
-                                                    errors,
-                                                    "registeredAddress.voivodeship"
-                                                )
+                                            getIn(
+                                                errors,
+                                                "registeredAddress.voivodeship"
+                                            )
                                         )}
                                         as={TextField}
                                     />
@@ -528,10 +532,10 @@ function CensusForm(props) {
                                                 touched,
                                                 "registeredAddress.town"
                                             ) &&
-                                                getIn(
-                                                    errors,
-                                                    "registeredAddress.town"
-                                                )
+                                            getIn(
+                                                errors,
+                                                "registeredAddress.town"
+                                            )
                                         )}
                                         as={TextField}
                                     />
@@ -562,10 +566,10 @@ function CensusForm(props) {
                                                 touched,
                                                 "registeredAddress.street"
                                             ) &&
-                                                getIn(
-                                                    errors,
-                                                    "registeredAddress.street"
-                                                )
+                                            getIn(
+                                                errors,
+                                                "registeredAddress.street"
+                                            )
                                         )}
                                         as={TextField}
                                     />
@@ -594,10 +598,10 @@ function CensusForm(props) {
                                                 touched,
                                                 "registeredAddress.number"
                                             ) &&
-                                                getIn(
-                                                    errors,
-                                                    "registeredAddress.number"
-                                                )
+                                            getIn(
+                                                errors,
+                                                "registeredAddress.number"
+                                            )
                                         )}
                                         as={TextField}
                                     />
@@ -755,7 +759,15 @@ function CensusForm(props) {
                                 </Typography>
                             </div>
 
-                            <Grid container justify="flex-end">
+                            <Grid container justify="space-between">
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => resetForm()}
+                                    className={classes.submit}
+                                >
+                                    Resetuj
+                                </Button>
                                 <Button
                                     variant="contained"
                                     color="primary"
@@ -766,9 +778,6 @@ function CensusForm(props) {
                                     Prześlij
                                 </Button>
                             </Grid>
-                            <pre>
-                                {JSON.stringify({ values, errors }, null, 2)}
-                            </pre>
                         </Form>
                     )}
                 </Formik>
@@ -777,4 +786,4 @@ function CensusForm(props) {
     );
 }
 
-export default CensusForm;
+export default connect(null, { sendFormData: operations.sendFormData })(CensusForm);
