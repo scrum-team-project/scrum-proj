@@ -6,11 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import {
+    Box,
     Checkbox,
     Divider,
     FormControlLabel,
     MenuItem,
-    Paper,
     Radio,
     RadioGroup,
     Typography,
@@ -126,7 +126,7 @@ function CensusForm(props) {
 
     return (
         <Container component="main" maxWidth="md">
-            <Paper className={classes.paper}>
+            <Box className={classes.paper}>
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -781,7 +781,7 @@ function CensusForm(props) {
                         </Form>
                     )}
                 </Formik>
-            </Paper>
+            </Box>
         </Container>
     );
 }
