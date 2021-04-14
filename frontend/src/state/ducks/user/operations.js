@@ -5,7 +5,7 @@ const login = (login, password) => (dispatch) => {
     console.log("LOGIN REQUEST");
     dispatch(
         createAction({
-            endpoint: "http://localhost:5000/api/login",
+            endpoint: "http://localhost:5000/accounts/login",
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ login, password }),
