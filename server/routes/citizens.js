@@ -52,7 +52,7 @@ router.delete("/:id", async (req, res) => {
   });
 });
 
-router.patch("/:idUser", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   const id = req.params.id;
   const updated = req.body;
 
