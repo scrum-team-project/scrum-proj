@@ -26,7 +26,7 @@ const mongoose = require("mongoose");
   try {
     const adm=new Admin({login:"admin",password:"admin"})
     await adm.save()
-    console.log('Dodano Admina');
+    console.log('Dodano Admina !!!');
   } catch (error) {
     console.log(error);
   }}
