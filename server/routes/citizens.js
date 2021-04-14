@@ -5,12 +5,12 @@ const Citizen = require("../models/Citizen");
 
 router.post("/add", async (req, res) => {
   try {
-    await Citizen.create(req.body, (error, newCitizen) => {
+    await Citizen.create(req.body, (error, added) => {
       if (error) console.log(error);
-      res.send(newCitizen);
+      res.send(true);
     });
   } catch (error) {
-    return res.send({ error });
+    return res.send(false);
   }
 });
 
@@ -39,6 +39,30 @@ router.get("/summary-population", async (req, res) => {
   }, []);
 
   res.send(grouppedByRegion);
+});
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  await Post.findByIdAndDelete(id, (error, deleted) => {
+    if (error) {
+      res.send(false); // false if fail
+    } else {
+      res.send(true); // true if success
+    }
+  });
+});
+
+router.patch("/:idUser", async (req, res) => {
+  const id = req.params.id;
+  const updated = req.body;
+
+  await User.findOneAndUpdate({ _id: id }, { $set: updated }, (error, updated) => {
+      if (error) {
+        res.send(false);
+      } else {
+        res.send(true);
+      }
+    });
 });
 
 module.exports = router;
