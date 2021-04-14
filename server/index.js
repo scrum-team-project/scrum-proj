@@ -2,13 +2,18 @@ const express = require("express");
 const app = express();
 const citizens = require("./routes/citizens");
 const accounts = require("./routes/accounts");
+const pollsters = require("./routes/pollsters");
 
-app.use(express.json());
 const cors = require("cors");
+app.use(express.json());
 app.use(cors());
+
 const Admin = require("./models/Admin");
+
 app.use("/citizens", citizens);
 app.use("/accounts", accounts);
+app.use("/pollsters", pollsters);
+
 
 app.post("/ping", (req, res) => {
   res.send("pong");
