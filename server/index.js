@@ -42,17 +42,16 @@ const mongoose = require("mongoose");
      
   const addUser= async ()=>  {
     try {
-      if(await !User.exists({ email: 'user@example.com' })){
+      if(await !User.exists({ email: 'user@example.com' }))
+      {
       const user=new User({ email: 'user@example.com',password:"password"})
       await user.save()
       console.log('Dodano Usera !!!');
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
     }}
-  
-
-
 mongoose
   .connect(
     `mongodb://${dbConnData.host}:${dbConnData.port}/${dbConnData.database}`,
@@ -73,4 +72,6 @@ mongoose
       console.log(`API server listening at http://localhost:${port}`);
     });
   })
-  .catch((error) => console.error("Error connecting to MongoDB", e
+  .catch((error) => console.error("Error connecting to MongoDB", error));
+
+
