@@ -29,6 +29,69 @@ router.get("/summaryByRegion", async (req, res) => {
     workingPercentage: 0,
   };
 
+
+  // const regionResultWorktype = await Citizen.aggregate().group({
+  //   _id: { region: "$region", worktype: "$worktype" },
+  //   quantity: { $sum: 1 },
+  // });
+
+  // const districtResultWorktype = await Citizen.aggregate().group({
+  //   _id: { region: "$region", district: "$district", worktype: "$worktype" },
+  //   quantity: { $sum: 1 },
+  // });
+
+  // const communityResultWorktype = await Citizen.aggregate().group({
+  //   _id: {
+  //     region: "$region",
+  //     district: "$district",
+  //     community: "$community",
+  //     worktype: "$worktype",
+  //   },
+  //   quantity: { $sum: 1 },
+  // });
+
+  // const cityResultWorktype = await Citizen.aggregate().group({
+  //   _id: {
+  //     region: "$region",
+  //     district: "$district",
+  //     community: "$community",
+  //     city: "$city",
+  //     worktype: "$worktype",
+  //   },
+  //   quantity: { $sum: 1 },
+  // });
+
+  // const regionResultPopulation = await Citizen.aggregate().group({
+  //   _id: { region: "$region" },
+  //   population: { $sum: 1 },
+  // });
+
+  // const districtResultPopulation = await Citizen.aggregate().group({
+  //   _id: { region: "$region", district: "$district" },
+  //   population: { $sum: 1 },
+  // });
+
+  // const communityResultPopulation = await Citizen.aggregate().group({
+  //   _id: { region: "$region", district: "$district", community: "$community" },
+  //   population: { $sum: 1 },
+  // });
+
+  // const cityResultPopulation = await Citizen.aggregate().group({
+  //   _id: {
+  //     region: "$region",
+  //     district: "$district",
+  //     community: "$community",
+  //     city: "$city",
+  //   },
+  //   population: { $sum: 1 },
+  // });
+
+  // [...cityResultPopulation[{...districtResultPopulation}]]
+
+  // console.log(regionResultWorktype);
+  // console.log("");
+  // console.log(regionResultPopulation);
+
   const grouppedByRegion = all.reduce((acc, value) => {
     if (!acc.find((el) => el.region === value.region)) {
       acc.push({
