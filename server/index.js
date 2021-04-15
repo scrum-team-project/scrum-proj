@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 const Admin = require("./models/Admin");
+const User = require("./models/User");
 
 app.use("/citizens", citizens);
 app.use("/accounts", accounts);
@@ -38,9 +39,19 @@ const mongoose = require("mongoose");
     } catch (error) {
       console.log(error);
     }}
-  
-
-
+     
+  const addUser= async ()=>  {
+    try {
+      if(await !User.exists({ email: 'user@example.com' }))
+      {
+      const user=new User({ email: 'user@example.com',password:"password"})
+      await user.save()
+      console.log('Dodano Usera !!!');
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }}
 mongoose
   .connect(
     `mongodb://${dbConnData.host}:${dbConnData.port}/${dbConnData.database}`,
@@ -55,6 +66,7 @@ mongoose
       `Connected to MongoDB. Database name: "${response.connections[0].name}"`
     );
     addAdmin()
+    addUser()
     const port = process.env.PORT || 5000;
     app.listen(port, () => {
       console.log(`API server listening at http://localhost:${port}`);
@@ -62,4 +74,4 @@ mongoose
   })
   .catch((error) => console.error("Error connecting to MongoDB", error));
 
- 
+
