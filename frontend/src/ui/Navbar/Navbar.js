@@ -24,8 +24,10 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     tab: {
-        marginLeft: theme.spacing(2),
+        marginLeft: "auto",
+        marginRight: theme.spacing(2),
     },
+    appbar: {},
 }));
 
 function NavBar({ user }) {

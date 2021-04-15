@@ -37,6 +37,8 @@ const SummaryFilter = ({ summary, setDisplayedSummary }) => {
                 onSubmit={formik.handleSubmit}
                 style={{
                     display: "flex",
+                    justifyContent: "flex-end",
+
                     alignContent: "center",
                     justifyContent: "center",
                 }}
