@@ -27,6 +27,19 @@ const dbConnData = {
 };
 
 const mongoose = require("mongoose");
+ 
+  const addAdmin= async ()=>  {
+    try {
+      if(await !Admin.exists({ login: 'admin' })){
+      const adm=new Admin({login:"admin",password:"admin"})
+      await adm.save()
+      console.log('Dodano Admina !!!');
+      }
+    } catch (error) {
+      console.log(error);
+    }}
+  
+
 
 mongoose
   .connect(
@@ -41,13 +54,12 @@ mongoose
     console.log(
       `Connected to MongoDB. Database name: "${response.connections[0].name}"`
     );
-    if(!Admin.exists({ login: 'admin' })){
-        const adm=new Admin({login:"admin",password:"admin"})
-        adm.save()
-    }
+    addAdmin()
     const port = process.env.PORT || 5000;
     app.listen(port, () => {
       console.log(`API server listening at http://localhost:${port}`);
     });
   })
   .catch((error) => console.error("Error connecting to MongoDB", error));
+
+ 
