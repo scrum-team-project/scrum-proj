@@ -29,6 +29,7 @@ router.get("/summaryByRegion", async (req, res) => {
     workingPercentage: 0,
   };
 
+
   // const regionResultWorktype = await Citizen.aggregate().group({
   //   _id: { region: "$region", worktype: "$worktype" },
   //   quantity: { $sum: 1 },
