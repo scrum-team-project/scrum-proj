@@ -1,3 +1,4 @@
+
 import { Container, Step, StepLabel, Stepper } from '@material-ui/core';
 import React, { useState } from 'react';
 import FinalStep from './Subforms/FinalStep';
@@ -5,7 +6,6 @@ import FirstStep from './Subforms/FirstStep';
 import FourthStep from './Subforms/FourthStep';
 import SecondStep from './Subforms/SecondStep';
 import ThirdStep from './Subforms/ThirdStep';
-
 
 const CensusForm = () => {
     const [step, setStep] = useState(1);
