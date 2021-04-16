@@ -8,6 +8,8 @@ const citizenSchema = new Schema({
     matrialStatus: String,
     education: String,
     region: String,
+    district: String,
+    community: String,
     city: String,
     street: String,
     zipCode: String,

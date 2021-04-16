@@ -1,9 +1,9 @@
 import "./App.css";
 import LoginForm from "./ui/Login/LoginForm";
 import Summary from "./ui/Summary/Summary";
-import CensusForm from "./ui/Census/CensusForm";
 import NavBar from "./ui/Navbar/Navbar";
 import { Route, Switch } from "react-router-dom";
+import CensusForm from "./ui/Census/CensusForm";
 
 function App() {
     return (
@@ -14,7 +14,7 @@ function App() {
                     <LoginForm />
                 </Route>
                 <Route path="/form">
-                    <CensusForm />
+                    <CensusForm/>
                 </Route>
                 <Route path="/">
                     <Summary />
