@@ -6,7 +6,7 @@ router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    if (await !Admin.exists({login: username, password: password})) {
+    if (await Admin.exists({login: username, password: password})) {
       res.send(true);
     } else {
       res.send(false);
