@@ -17,6 +17,7 @@ const CensusForm = () => {
     };
 
 
+
     const prevStep = (state) => {
         setStep(state - 1)
     };
