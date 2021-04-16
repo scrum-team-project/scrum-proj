@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const Admin = require('../models/Admin');
 
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    if (username === "admin" && password === "1234") {
+    if (await !Admin.exists({login: username, password: password})) {
       res.send(true);
     } else {
       res.send(false);

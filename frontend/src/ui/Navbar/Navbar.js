@@ -24,8 +24,10 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     tab: {
+
         marginLeft: "auto",
         marginRight: theme.spacing(2),
+
     },
     appbar: {},
 }));
@@ -36,7 +38,6 @@ function NavBar({ user }) {
     const url = useLocation();
     useEffect(() => {
         const path = url.pathname;
-
         if (path === "/") setValue(0);
         else setValue(1);
     }, [url, setValue]);
@@ -48,6 +49,7 @@ function NavBar({ user }) {
                     value={value}
                     aria-label="nav tabs example"
                     className={classes.tab}
+                    textColor="white"
                 >
                     <LinkTab
                         label="Dane Statystyczne"

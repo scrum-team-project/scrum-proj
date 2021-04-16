@@ -8,6 +8,7 @@ import FourthStep from './Subforms/FourthStep';
 import SecondStep from './Subforms/SecondStep';
 import ThirdStep from './Subforms/ThirdStep';
 
+
 const CensusForm = () => {
     const [step, setStep] = useState(1);
 
@@ -15,6 +16,11 @@ const CensusForm = () => {
         setStep(state + 1)
     };
 
+
+
+    const prevStep = (state) => {
+        setStep(state - 1)
+    };
 
 
     const renderSwitch = (step) => {
