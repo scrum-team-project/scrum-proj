@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  frontend:
+    environment: 
+      CHOKIDAR_USEPOLLING: "true"
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    volumes:
+      - /opt/app/node_modules
+      - ./frontend:/opt/app
+    ports:
+      - "3000:3000"
+  my-mongo:
+    restart: always
+    image: 'mongo'
+    ports:
+      - "27017:27017"
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    volumes:
+      - /opt/app/node_modules
+      - ./server:/opt/app
+    ports:
+      - "5000:5000"

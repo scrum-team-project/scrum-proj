@@ -1,0 +1,20 @@
+[
+    {
+        "Województwo": "Warmińsko-Mazurskie",
+        "podsumowanie":{
+            "liczbaMieszkańców": "1000000"
+        }
+    },
+    {
+        "Województwo": "Pomorskie",
+        "podsumowanie":{
+            "liczbaMieszkańców": "1001230"
+        }
+    },
+    {
+        "Województwo": "Łodzkie",
+        "podsumowanie":{
+            "liczbaMieszkańców": "10012324"
+        }
+    }
+]
