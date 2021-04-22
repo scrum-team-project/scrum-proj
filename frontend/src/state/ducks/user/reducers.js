@@ -10,6 +10,7 @@ const initialState = {
 const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LOGIN_SUCCESS: {
+            console.log(action.payload)
             return {
                 login: action.payload.login,
                 password: action.payload.password,
@@ -17,6 +18,7 @@ const loginReducer = (state = initialState, action) => {
             }
         }
         case types.LOGIN_FAILURE: {
+            console.log(action.payload)
             return {
                 ...state,
                 message: "Niepoprawne dane logowania"
@@ -24,6 +26,7 @@ const loginReducer = (state = initialState, action) => {
         }
 
         case types.LOGIN_REQUEST: {
+            console.log(action.payload)
             return state
         }
 

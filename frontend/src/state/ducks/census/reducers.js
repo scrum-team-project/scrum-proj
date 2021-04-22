@@ -1,4 +1,4 @@
-import { CENSUS_FAILURE, CENSUS_REQUEST, CENSUS_SUCCESS, UPDATE_FORM } from "./types";
+import { CENSUS_FAILURE, CENSUS_REQUEST, CENSUS_SUCCESS, RESET_FORM, UPDATE_FORM } from "./types";
 
 const initialState = {
     sentSuccessfully: false,
@@ -56,6 +56,10 @@ const censusFormReducer = (state = initialState, action) => {
                 ...state,
                 sentSuccessfully: "pending"
             }
+        }
+
+        case RESET_FORM: {
+            return initialState
         }
 
         default:

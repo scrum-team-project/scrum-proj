@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Field, Form, FieldArray } from "formik";
+import { Formik, Field, Form, FieldArray, getIn } from "formik";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -66,7 +66,11 @@ function SecondStep(props) {
 
     const emptyValues = {
         maritalStatus: "single",
-        spouse: "",
+        spouse: {
+            name: "",
+            surname: "",
+            id: ""
+        },
         kids: [],
     };
 
@@ -74,29 +78,37 @@ function SecondStep(props) {
 
     const validationSchema = Yup.object({
         maritalStatus: Yup.string().required("Pole wymagane"),
-        spouse: Yup.string()
-            .matches(/^\d+$/, "Niepoprawny numer PESEL")
-            .length(11, "Niepoprawna długość"),
+        spouse: Yup.object({
+            name: Yup.string().required("Pole wymagane"),
+            surname: Yup.string().required("Pole wymagane"),
+            id: Yup.string().required("Pole wymagane"),
+        }),
         kids: Yup.array(),
     });
 
     const getChildrenSubform = (index, remove) => (
-        <Grid item>
+        <Grid container style={{marginBottom: "36px"}}>
             <AccountCircleIcon fontSize="large" style={{ color: 'LightSlateGrey', marginLeft: '8px' }} />
             <Field name={`kids.${index}.id`} type="text" placeholder={'PESEL'} as={TextField} style={{ marginLeft: '6px' }} />
-            <IconButton color="primary" aria-label="edit" component="span" onClick={() => remove(index)}>
-                <ClearIcon fontSize='small' />
-            </IconButton>
+            <Grid item xs={12} align="left">
+                <IconButton color="primary" aria-label="edit" component="span" onClick={() => remove(index)} style={{ margin: '0px -4px 0px 4px'}} >
+                    <ClearIcon fontSize='small' />
+                </IconButton>
+                <Field name={`kids.${index}.name`} type="text" placeholder={'Imię'} as={TextField} style={{ marginLeft: '4px' }} />
+            </Grid>
+            <Grid item xs={12} align="left">
+                <Field name={`kids.${index}.surname`} type="text" placeholder={'Nazwisko'} as={TextField} style={{ marginLeft: '48px' }} />
+            </Grid>
         </Grid>
     )
 
 
     return (
-        <Container component="main" maxWidth="md">
+        <Container component="main" maxWidth="sm">
             <Paper className={classes.paper}>
                 <Formik
                     initialValues={initialValues}
-                    validationSchema={validationSchema}
+                    // validationSchema={validationSchema}
                     enableReinitialize
                     onSubmit={(data, { setSubmitting, resetForm }) => {
                         setSubmitting(true);
@@ -119,11 +131,10 @@ function SecondStep(props) {
                             <Typography align="left" variant={"h6"} paragraph>
                                 Relacje rodzinne
                             </Typography>
-                            <Grid container spacing={2}>
+                            <Grid container>
                                 <Grid container spacing={2}>
 
-                                    <Grid item xs={12} sm={6}>
-
+                                    <Grid item xs={12} sm={8}>
                                         <Field
                                             name={`maritalStatus`}
                                             type="select"
@@ -157,24 +168,97 @@ function SecondStep(props) {
                                         </MenuItem>
                                         </Field>
                                     </Grid>
-                                    <Grid item xs={12} sm={5}>
+                                    <Grid item xs={12} sm={12}>
+                                        <Typography align="left" variant={"subtitle2"}
+                                            style={{ marginTop: '-5px', marginBottom: "-16px" }}
+                                            color={values.maritalStatus !== "married" ? "textSecondary" : "textPrimary"}>
+                                            Dane małżonka
+                                        </Typography>
                                         <Field
-                                            name="spouse"
+                                            name="spouse.id"
                                             type="input"
                                             variant="standard"
-                                            label="Dane małżonka (PESEL)"
-                                            margin="normal"
-                                            fullWidth
+                                            label="PESEL"
                                             disabled={
                                                 values.maritalStatus !== "married"
                                             }
+                                            margin="normal"
+                                            fullWidth
                                             helperText={
-                                                touched.spouse ? errors.spouse : ""
+                                                getIn(
+                                                    touched,
+                                                    "spouse.id"
+                                                ) &&
+                                                getIn(errors, "spouse.id")
                                             }
-                                            error={
-                                                touched.spouse &&
-                                                Boolean(errors.spouse)
+                                            error={Boolean(
+                                                getIn(
+                                                    touched,
+                                                    "spouse.id"
+                                                ) &&
+                                                getIn(
+                                                    errors,
+                                                    "spouse.id"
+                                                )
+                                            )}
+                                            as={TextField}
+                                        />
+                                        <Field
+                                            name="spouse.name"
+                                            type="input"
+                                            variant="standard"
+                                            label="Imię"
+                                            disabled={
+                                                values.maritalStatus !== "married"
                                             }
+                                            margin="dense"
+                                            fullWidth
+                                            helperText={
+                                                getIn(
+                                                    touched,
+                                                    "spouse.name"
+                                                ) &&
+                                                getIn(errors, "spouse.name")
+                                            }
+                                            error={Boolean(
+                                                getIn(
+                                                    touched,
+                                                    "spouse.name"
+                                                ) &&
+                                                getIn(
+                                                    errors,
+                                                    "spouse.name"
+                                                )
+                                            )}
+                                            as={TextField}
+                                        />
+                                        <Field
+                                            name="spouse.surname"
+                                            type="input"
+                                            variant="standard"
+                                            label="Nazwisko"
+                                            disabled={
+                                                values.maritalStatus !== "married"
+                                            }
+                                            margin="dense"
+                                            fullWidth
+                                            helperText={
+                                                getIn(
+                                                    touched,
+                                                    "spouse.surname"
+                                                ) &&
+                                                getIn(errors, "spouse.surname")
+                                            }
+                                            error={Boolean(
+                                                getIn(
+                                                    touched,
+                                                    "spouse.surname"
+                                                ) &&
+                                                getIn(
+                                                    errors,
+                                                    "spouse.surname"
+                                                )
+                                            )}
                                             as={TextField}
                                         />
                                     </Grid>

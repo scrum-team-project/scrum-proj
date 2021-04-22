@@ -80,7 +80,7 @@ function ThirdStep(props) {
             <Paper className={classes.paper}>
                 <Formik
                     initialValues={initialValues}
-                    validationSchema={validationSchema}
+                    // validationSchema={validationSchema}
                     enableReinitialize
                     onSubmit={(data, { setSubmitting, resetForm }) => {
                         setSubmitting(true);
@@ -107,32 +107,32 @@ function ThirdStep(props) {
                                 <Grid container spacing={2}>
 
                                     <Grid item xs={12} sm={6}>
-                                        <Field
-                                            name="address.voivodeship"
-                                            type="input"
-                                            variant="standard"
-                                            label="Województwo"
-                                            margin="normal"
-                                            fullWidth
-                                            helperText={
-                                                getIn(
-                                                    touched,
-                                                    "address.voivodeship"
-                                                ) &&
-                                                getIn(errors, "address.voivodeship")
-                                            }
-                                            error={Boolean(
-                                                getIn(
-                                                    touched,
-                                                    "address.voivodeship"
-                                                ) &&
-                                                getIn(
-                                                    errors,
-                                                    "address.voivodeship"
-                                                )
-                                            )}
-                                            as={TextField}
-                                        />
+                                            <Field
+                                                name="address.voivodeship"
+                                                type="input"
+                                                variant="standard"
+                                                label="Województwo"
+                                                margin="normal"
+                                                fullWidth
+                                                helperText={
+                                                    getIn(
+                                                        touched,
+                                                        "address.voivodeship"
+                                                    ) &&
+                                                    getIn(errors, "address.voivodeship")
+                                                }
+                                                error={Boolean(
+                                                    getIn(
+                                                        touched,
+                                                        "address.voivodeship"
+                                                    ) &&
+                                                    getIn(
+                                                        errors,
+                                                        "address.voivodeship"
+                                                    )
+                                                )}
+                                                as={TextField}
+                                            />
                                     </Grid>
 
                                     <Grid item xs={12} sm={6}>
