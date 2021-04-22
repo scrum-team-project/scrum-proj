@@ -95,7 +95,7 @@ function FinalStep(props) {
                     onSubmit={(data, { resetForm }) => {
                         props.updateForm(data);
                         console.log(data);
-                        props.sendFormData(data);
+                        props.nextStep();
                         resetForm();
                     }}
                 >
@@ -178,14 +178,17 @@ function FinalStep(props) {
                                             }
                                             select
                                         >
-                                            <MenuItem value="trial">
-                                                okres próbny
-                                        </MenuItem>
-                                            <MenuItem value="unspecified">
-                                                czas nieokreślony
-                                        </MenuItem>
-                                            <MenuItem value="specified">
-                                                czas określony
+                                            <MenuItem value="employment">
+                                                umowa o pracę
+                                            </MenuItem>
+                                            <MenuItem value="specific">
+                                                umowa o dzieło
+                                            </MenuItem>
+                                            <MenuItem value="mandate">
+                                                umowa zlecenie
+                                            </MenuItem>
+                                            <MenuItem value="b2b">
+                                                b2b
                                         </MenuItem>
                                         </Field>
                                     </Grid>
@@ -209,7 +212,11 @@ function FinalStep(props) {
                                                 Boolean(errors.earnings)
                                             }
                                             fullWidth
+                                            style={{ marginBottom: '-2px' }}
                                         />
+                                        <Typography variant='caption' style={{ fontSize: '12px', marginTop: "-40px" }} color='textSecondary'>
+                                            brutto, zaokrąglone do pełnych złotych
+                                        </Typography>
                                     </Grid>
                                 </Grid>
 
@@ -243,7 +250,7 @@ function FinalStep(props) {
                                         startIcon={<ArrowBackIosSharpIcon />}
                                     >
                                         Wstecz
-                                </Button>
+                                    </Button>
                                     <Button
                                         variant="contained"
                                         color="primary"
@@ -260,7 +267,7 @@ function FinalStep(props) {
                                         className={classes.submit}
                                         endIcon={<ArrowForwardIosSharpIcon />}
                                     >
-                                        Zakończ
+                                        Dalej
                                 </Button>
                                 </Grid>
                             </Grid>

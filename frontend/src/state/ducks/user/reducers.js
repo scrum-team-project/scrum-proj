@@ -27,6 +27,7 @@ const loginReducer = (state = initialState, action) => {
             }
         }
         case types.LOGIN_FAILURE: {
+            console.log(action.payload)
             return {
                 ...state,
                 message: "Niepoprawne dane logowania"
@@ -34,6 +35,7 @@ const loginReducer = (state = initialState, action) => {
         }
 
         case types.LOGIN_REQUEST: {
+            console.log(action.payload)
             return state
         }
 

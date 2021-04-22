@@ -1,7 +1,6 @@
-import { CENSUS_FAILURE, CENSUS_REQUEST, CENSUS_SUCCESS, UPDATE_FORM } from "./types";
+import { CENSUS_FAILURE, CENSUS_REQUEST, CENSUS_SUCCESS, RESET_FORM, UPDATE_FORM } from "./types";
 
 const initialState = {
-    sentSuccessfully: false,
     firstName: "",
     lastName: "",
     id: "",
@@ -13,12 +12,16 @@ const initialState = {
     kids: [],
     address: {
         voivodeship: "",
+        district: "",
+        community: "",
         town: "",
         street: "",
         number: "",
     },
     registeredAddress: {
         voivodeship: "",
+        district: "",
+        community: "",
         town: "",
         street: "",
         number: "",
@@ -42,10 +45,7 @@ const censusFormReducer = (state = initialState, action) => {
         }
 
         case CENSUS_SUCCESS: {
-            return {
-                ...state,
-                sentSuccessfully: true
-            }
+            return initialState
         }
         case CENSUS_FAILURE: {
             return state
@@ -54,8 +54,11 @@ const censusFormReducer = (state = initialState, action) => {
         case CENSUS_REQUEST: {
             return {
                 ...state,
-                sentSuccessfully: "pending"
             }
+        }
+
+        case RESET_FORM: {
+            return initialState
         }
 
         default:
