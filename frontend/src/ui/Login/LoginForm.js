@@ -5,7 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Box } from "@material-ui/core";
+import { Box, Typography, FormControlLabel } from "@material-ui/core";
+import Switch from "@material-ui/core/Switch"
 import operations from "../../state/ducks/user/operations";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
@@ -37,11 +38,13 @@ function LoginForm(props) {
     const initialValues = {
         login: "",
         password: "",
+        isAdmin: false
     };
 
     return (
         <Container component="main" maxWidth="xs">
-            {props.user.loggedIn && <Redirect to="/form" />}
+            {props.user.loggedIn && props.user.isAdmin && <Redirect to="/users" />}
+            {props.user.loggedIn && !props.user.isAdmin && <Redirect to="/form" />}
             <Box className={classes.paper}>
                 <Formik
                     initialValues={initialValues}
@@ -49,7 +52,7 @@ function LoginForm(props) {
                     onSubmit={(data, { setSubmitting, resetForm }) => {
                         setSubmitting(true);
                         console.log(data);
-                        props.login(data.login, data.password);
+                        props.login(data.login, data.password, data.isAdmin);
                         setSubmitting(false);
                         resetForm();
                     }}
@@ -86,6 +89,12 @@ function LoginForm(props) {
                                 id="password"
                                 autoComplete="current-password"
                             />
+                            <Grid container>
+                                <FormControlLabel
+                                    control={<Switch checked={values.isAdmin} onChange={handleChange} name="isAdmin" label="Admin" id="isAdmin"/>}
+                                    label="Admin"
+                                />
+                            </Grid>
                             <Grid container>
                                 <Grid container>
                                     <Grid item>

@@ -219,7 +219,7 @@ router.delete("/:id", async (req, res) => {
     if (error) {
       res.send(false); // false if fail
     } else {
-      res.send(true); // true if success
+      res.send({id}); // true if success
     }
   });
 });
@@ -235,7 +235,7 @@ router.patch("/:id", async (req, res) => {
       if (error) {
         res.send(false);
       } else {
-        res.send(true);
+        res.send(updated);
       }
     }
   );
