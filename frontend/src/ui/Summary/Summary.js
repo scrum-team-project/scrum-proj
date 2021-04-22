@@ -5,7 +5,24 @@ import SummaryView from "./SummaryView";
 import { connect } from "react-redux";
 import operations from "../../state/ducks/summary/operations";
 import { selectToDisplay } from "../../state/ducks/summary/actions";
-const Summary = ({ summary, fetchSummary, setDisplayedSummary }) => {
+import {
+    getCity,
+    getCommunity,
+    getDistrict,
+    getPossibleCities,
+    getPossibleCommunities,
+    getPossibleDistricts,
+    get_region,
+} from "../../state/ducks/summary/selectors";
+const Summary = ({
+    summary,
+    fetchSummary,
+    setDisplayedSummary,
+    city,
+    district,
+    community,
+    region,
+}) => {
     useEffect(() => {
         fetchSummary();
     }, [fetchSummary]);
@@ -14,13 +31,40 @@ const Summary = ({ summary, fetchSummary, setDisplayedSummary }) => {
         <Grid container justify="center">
             {summary && (
                 <SummaryFilter
-                    summary={summary.allData}
+                    summary={summary}
                     setDisplayedSummary={setDisplayedSummary}
                 />
             )}
-            {summary && Object.keys(summary.displayed).length !== 0 && (
+            {region && (
                 <SummaryView
-                    displayedSummary={summary.displayed.podsumowanie}
+                    displayedSummary={region.summaryRegion}
+                    title={"Województwo"}
+                    level={"region"}
+                    name={region.region}
+                />
+            )}
+            {district && (
+                <SummaryView
+                    displayedSummary={district.summaryDistrict}
+                    title={"Powiat"}
+                    level={"district"}
+                    name={district.district}
+                />
+            )}
+            {community && (
+                <SummaryView
+                    displayedSummary={community.summaryCommunity}
+                    title={"Gmina"}
+                    level={"community"}
+                    name={community.community}
+                />
+            )}
+            {city && (
+                <SummaryView
+                    displayedSummary={city.summaryCity}
+                    title={"Miasto"}
+                    level={"city"}
+                    name={city.city}
                 />
             )}
         </Grid>
@@ -29,11 +73,14 @@ const Summary = ({ summary, fetchSummary, setDisplayedSummary }) => {
 
 const mapStatetoProps = (state) => ({
     summary: state.summary,
+    region: get_region(state),
+    district: getDistrict(state),
+    community: getCommunity(state),
+    city: getCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
     fetchSummary: () => operations.fetchSummary()(dispatch),
-    setDisplayedSummary: (object) => dispatch(selectToDisplay(object)),
 });
 
 export default connect(mapStatetoProps, mapDispatchToProps)(Summary);

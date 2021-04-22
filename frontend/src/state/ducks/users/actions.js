@@ -18,6 +18,7 @@ export const getUsers = () => (dispatch) => dispatch(createAction({
 }));
 
 
+
 export const addUsers = (values) => (dispatch) => dispatch(createAction({
   endpoint: 'http://localhost:5000/citizens/add',
   method: 'POST',

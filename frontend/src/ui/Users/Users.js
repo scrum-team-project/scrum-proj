@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getUsers, delUsers, putUsers ,addUsers } from "../../state/ducks/users/actions";
@@ -71,6 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
   delUsers: (id) => delUsers(id)(dispatch),
   putUsers: (user) => putUsers(user)(dispatch),
   addUsers: (user) => addUsers(user)(dispatch),
+
 });
 
 export default connect(mapStatetoProps, mapDispatchToProps)(Users);
