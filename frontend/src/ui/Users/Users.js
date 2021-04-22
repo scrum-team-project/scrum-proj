@@ -6,16 +6,15 @@ import { getUsers,delUsers,putUsers } from "../../state/ducks/users/actions";
 const Users = ({ users, getUsers,delUsers,putUsers }) => {
     useEffect(() => {
         getUsers();
-        
     }, [getUsers]);
     console.log(users);
     let view= users && users.map( (user) => (
     <div key={user._id}>
     {`${user.name} ${user.surname} ${user.pesel}`}
     <button onClick={() => delUsers(user._id)}>Delete</button>
-    <button onClick={() => putUsers(user)}>Edit</button> 
-    
-    </div> 
+    <button onClick={() => putUsers(user)}>Edit</button>
+
+    </div>
     ) )
     return (
         <div>{view}</div>
