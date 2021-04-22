@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "npm i nodemon -g",
-    "start": " nodemon index.js",
-    "dev": "nodemon index.js --legacy-watch"
+    "start": " nodemon -L index.js",
+    "dev": "nodemon -L index.js"
   },
   "author": "",
   "license": "ISC",

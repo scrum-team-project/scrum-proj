@@ -18,32 +18,23 @@ export const getUsers = () => (dispatch) => dispatch(createAction({
 }));
 
 
-// export const addUSERS = (values) => (dispatch) => dispatch(createAction({
-//   endpoint: 'http://localhost:5000/USERS',
-//   method: 'POST',
-//   headers: {
-//     "Accept": "application/json",
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify({
-//     ...values
-//   }),
-//   types: [
-//     USERS_REQUEST,
-//     {
-//       type: ADD_USERS,
-//       payload: async (action, state, res) => {
-//         const json = await res.json();
-//         const { entities } = normalize(json, USERSchema);
-//         return entities;
-//       },
-//       meta: { actionType: 'GET_ONE' }
+export const addUsers = (values) => (dispatch) => dispatch(createAction({
+  endpoint: 'http://localhost:5000/citizens/add',
+  method: 'POST',
+  headers: {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    ...values
+  }),
+  types: [
+    USERS_REQUEST,
+    ADD_USERS,
+    USERS_FAILURE,
+  ]
 
-//     },
-//     USERS_FAILURE,
-//   ]
-
-// }));
+}));
 
 
 export const delUsers = (id) => (dispatch) => dispatch(createAction({
