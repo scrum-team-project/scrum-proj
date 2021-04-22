@@ -1,6 +1,8 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles, Typography, IconButton } from "@material-ui/core";
 import React, { useState } from "react";
 import SummaryTile from "./SummaryTile";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -25,14 +27,22 @@ const SummaryView = ({ displayedSummary, title, level, name }) => {
             spacing={5}
             className={classes.container}
         >
-            <Grid item xs={12} md={10}>
-                <Typography
-                    variant="h4"
-                    className={classes.textContainer}
-                    onClick={() => setVisible((prev) => !prev)}
-                >
+            <Grid
+                item
+                xs={12}
+                md={10}
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                }}
+            >
+                <Typography variant="h4" className={classes.textContainer}>
                     {title}: {name}
                 </Typography>
+                <IconButton onClick={() => setVisible((prev) => !prev)}>
+                    {visible ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+                </IconButton>
             </Grid>
             {visible && (
                 <>
