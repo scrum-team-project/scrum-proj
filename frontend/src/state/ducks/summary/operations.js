@@ -1,40 +1,149 @@
 import { createAction } from "redux-api-middleware";
-import { FETCH_SUMMARY } from "./types";
-
-const fetchMock = [
+import { FETCH_SUMMARY, SUMMARY_REQUEST, SUMMARY_FAILURE } from "./types";
+const mockSummary = [
     {
-        wojewodztwo: "Warmińsko-Mazurskie",
-        podsumowanie: {
-            liczbaMieszkancow: "1000000",
+        region: "Mazowieckie",
+        districts: [
+            {
+                district: "Warszawa",
+                communities: [
+                    {
+                        community: "Warszawa",
+                        cities: [
+                            {
+                                city: "Warszawa",
+                                summaryCity: {
+                                    population: 2,
+                                    workingPopulation: 1,
+                                    workingPercentage: 50,
+                                },
+                            },
+                        ],
+                        summaryCommunity: {
+                            population: 2,
+                            workingPopulation: 1,
+                            workingPercentage: 50,
+                        },
+                    },
+                ],
+                summaryDistrict: {
+                    population: 2,
+                    workingPopulation: 1,
+                    workingPercentage: 50,
+                },
+            },
+            {
+                district: "Legionowo",
+                communities: [
+                    {
+                        community: "Legionowo",
+                        cities: [
+                            {
+                                city: "Legionowo",
+                                summaryCity: {
+                                    population: 1,
+                                    workingPopulation: 0,
+                                    workingPercentage: 0,
+                                },
+                            },
+                        ],
+                        summaryCommunity: {
+                            population: 1,
+                            workingPopulation: 0,
+                            workingPercentage: 0,
+                        },
+                    },
+                ],
+                summaryDistrict: {
+                    population: 1,
+                    workingPopulation: 0,
+                    workingPercentage: 0,
+                },
+            },
+        ],
+        summaryRegion: {
+            population: 3,
+            workingPopulation: 1,
+            workingPercentage: 33.33,
         },
     },
     {
-        wojewodztwo: "Pomorskie",
-        podsumowanie: {
-            liczbaMieszkancow: "1001230",
-        },
-    },
-    {
-        wojewodztwo: "Łodzkie",
-        podsumowanie: {
-            liczbaMieszkancow: "10012324",
+        region: "Pomorskie",
+        districts: [
+            {
+                district: "Gdynia",
+                communities: [
+                    {
+                        community: "Gdynia",
+                        cities: [
+                            {
+                                city: "Gdynia",
+                                summaryCity: {
+                                    population: 1,
+                                    workingPopulation: 1,
+                                    workingPercentage: 100,
+                                },
+                            },
+                        ],
+                        summaryCommunity: {
+                            population: 1,
+                            workingPopulation: 1,
+                            workingPercentage: 100,
+                        },
+                    },
+                ],
+                summaryDistrict: {
+                    population: 1,
+                    workingPopulation: 1,
+                    workingPercentage: 100,
+                },
+            },
+            {
+                district: "Gdańsk",
+                communities: [
+                    {
+                        community: "Gdańsk",
+                        cities: [
+                            {
+                                city: "Gdańsk",
+                                summaryCity: {
+                                    population: 1,
+                                    workingPopulation: 1,
+                                    workingPercentage: 100,
+                                },
+                            },
+                        ],
+                        summaryCommunity: {
+                            population: 1,
+                            workingPopulation: 1,
+                            workingPercentage: 100,
+                        },
+                    },
+                ],
+                summaryDistrict: {
+                    population: 1,
+                    workingPopulation: 1,
+                    workingPercentage: 100,
+                },
+            },
+        ],
+        summaryRegion: {
+            population: 2,
+            workingPopulation: 2,
+            workingPercentage: 100,
         },
     },
 ];
+
 const fetchSummary = () => (dispatch) => {
     console.log("fetching summary");
-
-    dispatch({ type: FETCH_SUMMARY, payload: fetchMock });
+    dispatch({ type: FETCH_SUMMARY, payload: mockSummary });
     // dispatch(
     //     createAction({
     //         endpoint: "http://localhost:5000/summary",
     //         method: "GET",
     //         headers: { "Content-Type": "application/json" },
-    //         types: [
-    //             types.SUMMARY_REQUEST,
-    //             types.FETCH_SUMMARY,
-    //             types.SUMMARY_FAILURE,
-    //         ],
+    //         types: [SUMMARY_REQUEST, FETCH_SUMMARY, SUMMARY_FAILURE],
     //     })
     // );
 };
