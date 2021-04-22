@@ -79,9 +79,9 @@ function SecondStep(props) {
     const validationSchema = Yup.object({
         maritalStatus: Yup.string().required("Pole wymagane"),
         spouse: Yup.object({
-            name: Yup.string().required("Pole wymagane"),
-            surname: Yup.string().required("Pole wymagane"),
-            id: Yup.string().required("Pole wymagane"),
+            name: Yup.string(),
+            surname: Yup.string(),
+            id: Yup.string(),
         }),
         kids: Yup.array(),
     });
@@ -108,7 +108,7 @@ function SecondStep(props) {
             <Paper className={classes.paper}>
                 <Formik
                     initialValues={initialValues}
-                    // validationSchema={validationSchema}
+                    validationSchema={validationSchema}
                     enableReinitialize
                     onSubmit={(data, { setSubmitting, resetForm }) => {
                         setSubmitting(true);

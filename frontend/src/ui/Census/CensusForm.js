@@ -52,11 +52,9 @@ const CensusForm = () => {
                         </Step>
                     ))}
                 </Stepper>
-            </Container>
-
+            </Container>            
             {renderSwitch(step)}
-            <FormConfirmation/>
-
+            {step === 7 ? (<FormConfirmation editStep={(step) => setStep(step)}/>) : <></>}
         </>
     )
 }

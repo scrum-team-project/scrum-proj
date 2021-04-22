@@ -58,6 +58,8 @@ function ThirdStep(props) {
     const emptyValues = {
         address: {
             voivodeship: "",
+            district: "",
+            community: "",
             town: "",
             street: "",
             number: "",
@@ -69,6 +71,8 @@ function ThirdStep(props) {
     const validationSchema = Yup.object({
         address: Yup.object({
             voivodeship: Yup.string().required("Pole wymagane"),
+            district: Yup.string().required("Pole wymagane"),
+            community: Yup.string().required("Pole wymagane"),
             town: Yup.string().required("Pole wymagane"),
             street: Yup.string().required("Pole wymagane"),
             number: Yup.string().required("Pole wymagane"),
@@ -80,7 +84,7 @@ function ThirdStep(props) {
             <Paper className={classes.paper}>
                 <Formik
                     initialValues={initialValues}
-                    // validationSchema={validationSchema}
+                    validationSchema={validationSchema}
                     enableReinitialize
                     onSubmit={(data, { setSubmitting, resetForm }) => {
                         setSubmitting(true);
@@ -107,32 +111,32 @@ function ThirdStep(props) {
                                 <Grid container spacing={2}>
 
                                     <Grid item xs={12} sm={6}>
-                                            <Field
-                                                name="address.voivodeship"
-                                                type="input"
-                                                variant="standard"
-                                                label="Województwo"
-                                                margin="normal"
-                                                fullWidth
-                                                helperText={
-                                                    getIn(
-                                                        touched,
-                                                        "address.voivodeship"
-                                                    ) &&
-                                                    getIn(errors, "address.voivodeship")
-                                                }
-                                                error={Boolean(
-                                                    getIn(
-                                                        touched,
-                                                        "address.voivodeship"
-                                                    ) &&
-                                                    getIn(
-                                                        errors,
-                                                        "address.voivodeship"
-                                                    )
-                                                )}
-                                                as={TextField}
-                                            />
+                                        <Field
+                                            name="address.voivodeship"
+                                            type="input"
+                                            variant="standard"
+                                            label="Województwo"
+                                            margin="normal"
+                                            fullWidth
+                                            helperText={
+                                                getIn(
+                                                    touched,
+                                                    "address.voivodeship"
+                                                ) &&
+                                                getIn(errors, "address.voivodeship")
+                                            }
+                                            error={Boolean(
+                                                getIn(
+                                                    touched,
+                                                    "address.voivodeship"
+                                                ) &&
+                                                getIn(
+                                                    errors,
+                                                    "address.voivodeship"
+                                                )
+                                            )}
+                                            as={TextField}
+                                        />
                                     </Grid>
 
                                     <Grid item xs={12} sm={6}>
@@ -155,6 +159,59 @@ function ThirdStep(props) {
                                         />
                                     </Grid>
                                 </Grid>
+
+                                <Grid container spacing={2}>
+
+                                    <Grid item xs={12} sm={6}>
+                                        <Field
+                                            name="address.district"
+                                            type="input"
+                                            variant="standard"
+                                            label="Powiat"
+                                            margin="normal"
+                                            fullWidth
+                                            helperText={
+                                                getIn(
+                                                    touched,
+                                                    "address.district"
+                                                ) &&
+                                                getIn(errors, "address.district")
+                                            }
+                                            error={Boolean(
+                                                getIn(
+                                                    touched,
+                                                    "address.district"
+                                                ) &&
+                                                getIn(
+                                                    errors,
+                                                    "address.district"
+                                                )
+                                            )}
+                                            as={TextField}
+                                        />
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={6}>
+                                        <Field
+                                            name="address.community"
+                                            type="input"
+                                            variant="standard"
+                                            label="Gmina"
+                                            margin="normal"
+                                            fullWidth
+                                            helperText={
+                                                getIn(touched, "address.community") &&
+                                                getIn(errors, "address.community")
+                                            }
+                                            error={Boolean(
+                                                getIn(touched, "address.community") &&
+                                                getIn(errors, "address.community")
+                                            )}
+                                            as={TextField}
+                                        />
+                                    </Grid>
+                                </Grid>
+
                                 <Grid container spacing={2}>
 
                                     <Grid item xs={12} sm={7}>

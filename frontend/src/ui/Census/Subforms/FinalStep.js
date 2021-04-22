@@ -90,13 +90,12 @@ function FinalStep(props) {
             <Paper className={classes.paper}>
                 <Formik
                     initialValues={initialValues}
-                    // validationSchema={validationSchema}
+                    validationSchema={validationSchema}
                     enableReinitialize
                     onSubmit={(data, { resetForm }) => {
                         props.updateForm(data);
                         console.log(data);
                         props.nextStep();
-                        props.sendFormData(data);
                         resetForm();
                     }}
                 >

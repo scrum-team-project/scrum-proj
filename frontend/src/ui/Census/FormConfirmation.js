@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const FormConfirmation = () => {
+const FormConfirmation = (props) => {
     const classes = useStyles();
 
     const [checked, setChecked] = React.useState(false);
@@ -56,6 +56,7 @@ const FormConfirmation = () => {
                         variant="contained"
                         color="primary"
                         type="submit"
+                        onClick={() => props.editStep(1)}
                         className={classes.submit}
                     >
                         Zakończ
