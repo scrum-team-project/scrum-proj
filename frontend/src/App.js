@@ -14,7 +14,7 @@ function App() {
                     <LoginForm />
                 </Route>
                 <Route path="/form">
-                    <CensusForm/>
+                    <CensusForm />
                 </Route>
                 <Route path="/users">
                     <Users />
