@@ -74,9 +74,9 @@ function FinalStep(props) {
 
 
     const validationSchema = Yup.object({
-        workplace: Yup.string().required("Pole wymagane"),
-        worktype: Yup.string().required("Pole wymagane"),
-        typeOfEmploymentContract: Yup.string().required("Pole wymagane"),
+        workplace: Yup.string(),
+        worktype: Yup.string(),
+        typeOfEmploymentContract: Yup.string(),
         earnings: Yup.number().min(0),
         disabled: Yup.boolean(),
     });
