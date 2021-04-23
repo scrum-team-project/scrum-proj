@@ -24,10 +24,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     tab: {
-
         marginLeft: "auto",
         marginRight: theme.spacing(2),
-
     },
     appbar: {},
 }));
@@ -39,6 +37,7 @@ function NavBar({ user }) {
     useEffect(() => {
         const path = url.pathname;
         if (path === "/") setValue(0);
+        else if (path === "/users") setValue(2);
         else setValue(1);
     }, [url, setValue]);
 
@@ -68,6 +67,13 @@ function NavBar({ user }) {
                         <LinkTab
                             label="Logowanie"
                             link="/login"
+                            {...a11yProps(1)}
+                        />
+                    )}
+                    {user.isAdmin && (
+                        <LinkTab
+                            label="Lista osób"
+                            link="/users"
                             {...a11yProps(1)}
                         />
                     )}

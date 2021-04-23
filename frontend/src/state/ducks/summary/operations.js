@@ -136,16 +136,16 @@ const mockSummary = [
 ];
 
 const fetchSummary = () => (dispatch) => {
-    console.log("fetching summary");
-    dispatch({ type: FETCH_SUMMARY, payload: mockSummary });
-    // dispatch(
-    //     createAction({
-    //         endpoint: "http://localhost:5000/summary",
-    //         method: "GET",
-    //         headers: { "Content-Type": "application/json" },
-    //         types: [SUMMARY_REQUEST, FETCH_SUMMARY, SUMMARY_FAILURE],
-    //     })
-    // );
+    // console.log("fetching summary");
+    // dispatch({ type: FETCH_SUMMARY, payload: mockSummary });
+    dispatch(
+        createAction({
+            endpoint: "http://localhost:5000/citizens/summaryByRegion",
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            types: [SUMMARY_REQUEST, FETCH_SUMMARY, SUMMARY_FAILURE],
+        })
+    );
 };
 
 const operations = {
