@@ -2,6 +2,8 @@
 
 import { Container, Step, StepLabel, Stepper } from '@material-ui/core';
 import React, { useState } from 'react';
+import FormConfirmation from './FormConfirmation';
+import FormSummary from './FormSummary';
 import FinalStep from './Subforms/FinalStep';
 import FirstStep from './Subforms/FirstStep';
 import FourthStep from './Subforms/FourthStep';
@@ -15,8 +17,6 @@ const CensusForm = () => {
     const nextStep = (state) => {
         setStep(state + 1)
     };
-
-
 
     const prevStep = (state) => {
         setStep(state - 1)
@@ -34,7 +34,9 @@ const CensusForm = () => {
             case 4:
                 return <FourthStep nextStep={() => nextStep(step)} prevStep={() => prevStep(step)} />;
             case 5:
-                return <FinalStep prevStep={() => prevStep(step)} />;
+                return <FinalStep nextStep={() => nextStep(step)} prevStep={() => prevStep(step)} />;
+            case 6:
+                return <FormSummary nextStep={() => nextStep(step)} prevStep={() => prevStep(step)} editStep={(step) => setStep(step)}/>;
             default:
                 return <></>
         }
@@ -44,15 +46,15 @@ const CensusForm = () => {
         <>
             <Container style={{ marginTop: "18px", marginBottom: "-40px", maxWidth: "1200px" }}>
                 <Stepper activeStep={step - 1} alternativeLabel style={{ backgroundColor: "#F5F5F5" }}>
-                    {[1, 2, 3, 4, 5].map((label) => (
+                    {[1, 2, 3, 4, 5, 6].map((label) => (
                         <Step key={label}>
                             <StepLabel></StepLabel>
                         </Step>
                     ))}
                 </Stepper>
-            </Container>
-
+            </Container>            
             {renderSwitch(step)}
+            {step === 7 ? (<FormConfirmation editStep={(step) => setStep(step)}/>) : <></>}
         </>
     )
 }

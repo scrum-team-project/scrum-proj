@@ -28,6 +28,7 @@ const Users = ({ users, getUsers, delUsers, putUsers,addUsers }) => {
   console.log(users);
   let rows = users && users.map((user,index) => 
     createData(index+1+".",user.name,user.surname,user.spouse,user._id),
+
     );
     return (
         <TableContainer component={Paper}>

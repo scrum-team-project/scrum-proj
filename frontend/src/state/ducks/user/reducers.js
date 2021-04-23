@@ -4,19 +4,30 @@ const initialState = {
     login: "",
     password: "",
     loggedIn: false,
-    message: ""
+    message: "",
+    isAdmin: false
 }
 
 const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LOGIN_SUCCESS: {
+            console.log(action);
             return {
-                login: action.payload.login,
-                password: action.payload.password,
-                loggedIn: true
+                ...state,
+                loggedIn: true,
+                isAdmin: false
+            }
+        }
+        case types.LOGIN_ADMIN_SUCCESS: {
+            console.log(action);
+            return {
+                ...state,
+                loggedIn: true,
+                isAdmin: true
             }
         }
         case types.LOGIN_FAILURE: {
+            console.log(action.payload)
             return {
                 ...state,
                 message: "Niepoprawne dane logowania"
@@ -24,6 +35,7 @@ const loginReducer = (state = initialState, action) => {
         }
 
         case types.LOGIN_REQUEST: {
+            console.log(action.payload)
             return state
         }
 

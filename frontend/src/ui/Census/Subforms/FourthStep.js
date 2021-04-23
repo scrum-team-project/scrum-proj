@@ -64,6 +64,8 @@ function FourthStep(props) {
     const emptyValues = {
         registeredAddress: {
             voivodeship: "",
+            district: "",
+            community: "",
             town: "",
             street: "",
             number: "",
@@ -77,6 +79,8 @@ function FourthStep(props) {
     const validationSchema = Yup.object({
         registeredAddress: Yup.object({
             voivodeship: Yup.string().required("Pole wymagane"),
+            district: Yup.string().required("Pole wymagane"),
+            community: Yup.string().required("Pole wymagane"),
             town: Yup.string().required("Pole wymagane"),
             street: Yup.string().required("Pole wymagane"),
             number: Yup.string().required("Pole wymagane"),
@@ -190,6 +194,57 @@ function FourthStep(props) {
                                     </Grid>
                                 </Grid>
                                 <Grid container spacing={2}>
+
+                                    <Grid item xs={12} sm={6}>
+                                        <Field
+                                            name="registeredAddress.district"
+                                            type="input"
+                                            variant="standard"
+                                            label="Powiat"
+                                            margin="normal"
+                                            fullWidth
+                                            helperText={
+                                                getIn(
+                                                    touched,
+                                                    "registeredAddress.district"
+                                                ) &&
+                                                getIn(errors, "registeredAddress.district")
+                                            }
+                                            error={Boolean(
+                                                getIn(
+                                                    touched,
+                                                    "registeredAddress.district"
+                                                ) &&
+                                                getIn(
+                                                    errors,
+                                                    "registeredAddress.district"
+                                                )
+                                            )}
+                                            as={TextField}
+                                        />
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={6}>
+                                        <Field
+                                            name="registeredAddress.community"
+                                            type="input"
+                                            variant="standard"
+                                            label="Gmina"
+                                            margin="normal"
+                                            fullWidth
+                                            helperText={
+                                                getIn(touched, "registeredAddress.community") &&
+                                                getIn(errors, "registeredAddress.community")
+                                            }
+                                            error={Boolean(
+                                                getIn(touched, "registeredAddress.community") &&
+                                                getIn(errors, "registeredAddress.community")
+                                            )}
+                                            as={TextField}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={2}>
                                     <Grid item xs={12} sm={7}>
                                         <Field
                                             name="registeredAddress.street"
@@ -291,7 +346,7 @@ function FourthStep(props) {
                     )}
                 </Formik>
             </Paper>
-        </Container >
+        </Container>
     );
 };
 
