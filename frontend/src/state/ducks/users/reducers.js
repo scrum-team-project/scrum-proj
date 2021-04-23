@@ -7,12 +7,17 @@ const initialState = {
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_USERS_SUCCESS: {
-            console.log('Halko');
             return {
                 users: [...action.payload],
                 
             }
         }
+        case ADD_USERS: {
+            return {
+                users: [...state.users,action.payload],
+            }
+        }
+
         case DELETE_USERS: {
             console.log(action);
             const arr=state.users.filter(elem => elem._id !== action.payload.id)
